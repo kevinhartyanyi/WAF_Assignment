@@ -36,6 +36,7 @@ namespace Assignment_WebShop_2.Models
         [Required]
         public bool Available { get; set; }
 
+        [Required]
         public byte[] Image { get; set; }
     }
 }

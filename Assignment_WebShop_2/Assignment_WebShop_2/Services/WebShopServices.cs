@@ -44,6 +44,14 @@ namespace Assignment_WebShop_2.Services
                 .Single(x => x.ID == id);
         }
 
+        public Category GetCategoryByName(string categoryName)
+        {
+            
+            return context.Categories
+                .Include(x => x.Products)
+                .Single(x => x.Name == categoryName);
+        }
+
         public Product GetProduct(int id)
         {
             return context.Products
@@ -51,10 +59,11 @@ namespace Assignment_WebShop_2.Services
                 .Single(x => x.ID == id);
         }
 
-        public Product GetRandomProduct()
+        public Product GetRandomProduct(string categoryName)
         {
-            int ind = random.Next(context.Products.Count());
-            return context.Products.Skip(ind).First();
+            var category = GetCategoryByName(categoryName);
+            int ind = random.Next(category.Products.Count());
+            return category.Products.Skip(ind).First();
         }
     }
 }

@@ -23,7 +23,7 @@
                 <a asp-action="Details" asp-route-id="@item.ID">@Html.DisplayFor(modelItem => item.Name)</a>
             </td>
             <td>
-                <img src="@Url.Action("DisplayRandomImage", "Categories")" class="category" />
+                <img src="@Url.Action("DisplayRandomImage", "Categories",  new { categoryName = item.Name })" class="category" />
             </td>
         </tr>
 }

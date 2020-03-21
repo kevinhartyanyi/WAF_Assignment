@@ -25,8 +25,12 @@ namespace Assignment_WebShop_2.Models
             }
 
 
-            var applePath = Path.Combine(imageDirectory, "apple.png");
-            var pearPath = Path.Combine(imageDirectory, "pearl.png");
+            var tabble_lamp = Path.Combine(imageDirectory, "tabble_lamp.png");
+            var simple_lamp = Path.Combine(imageDirectory, "simple_lamp.png");
+            var dark_lamp = Path.Combine(imageDirectory, "dark_lamp.png");
+
+            var monitor_1 = Path.Combine(imageDirectory, "monitor_1.png");
+            var monitor_2 = Path.Combine(imageDirectory, "monitor_2.png");
 
 
             var categories = new Category[]
@@ -38,25 +42,36 @@ namespace Assignment_WebShop_2.Models
                     {
                         new Product
                         {
-                            Manufacturer = "DEL",
+                            Manufacturer = "Light",
                             Amount = 10,
                             Available = true,
                             CategoryId = 2,
                             ModelID = 3101,
                             Price = 200,
                             Description = "In good shape",
-                            Image = File.Exists(pearPath) ? File.ReadAllBytes(pearPath) : null
+                            Image = File.Exists(tabble_lamp) ? File.ReadAllBytes(tabble_lamp) : null
                         },
                         new Product
                         {
-                            Manufacturer = "Samsung",
+                            Manufacturer = "Light",
                             Amount = 3,
                             Available = true,
                             CategoryId = 1,
                             ModelID = 1024,
                             Price = 50,
-                            Description = "Lightness",
-                            Image = File.Exists(applePath) ? File.ReadAllBytes(applePath) : null
+                            Description = "Brighter than you think",
+                            Image = File.Exists(simple_lamp) ? File.ReadAllBytes(simple_lamp) : null
+                        },
+                        new Product
+                        {
+                            Manufacturer = "Dark",
+                            Amount = 3,
+                            Available = true,
+                            CategoryId = 1,
+                            ModelID = 1222,
+                            Price = 100,
+                            Description = "Works in the dark too",
+                            Image = File.Exists(dark_lamp) ? File.ReadAllBytes(dark_lamp) : null
                         }
                     }
                 },
@@ -67,14 +82,25 @@ namespace Assignment_WebShop_2.Models
                     {
                         new Product
                         {
-                            Manufacturer = "PLAT",
+                            Manufacturer = "Acer",
                             Amount = 3,
                             Available = false,
                             CategoryId = 2,
                             ModelID = 4024,
                             Price = 40,
-                            Description = "There's no light without darkness",
-                            Image = File.Exists(pearPath) ? File.ReadAllBytes(pearPath) : null
+                            Description = "Kinda works",
+                            Image = File.Exists(monitor_1) ? File.ReadAllBytes(monitor_1) : null
+                        },
+                        new Product
+                        {
+                            Manufacturer = "HP",
+                            Amount = 2,
+                            Available = false,
+                            CategoryId = 2,
+                            ModelID = 1424,
+                            Price = 80,
+                            Description = "Used to work",
+                            Image = File.Exists(monitor_2) ? File.ReadAllBytes(monitor_2) : null
                         }
                     }
                 }

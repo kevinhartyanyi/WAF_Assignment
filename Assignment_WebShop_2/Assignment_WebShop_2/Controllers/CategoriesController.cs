@@ -26,9 +26,19 @@ namespace Assignment_WebShop_2.Controllers
             return View(_service.GetCategories());
         }
 
-        public IActionResult DisplayRandomImage()
+        public IActionResult DisplayImage(int id)
         {
-            var item = _service.GetRandomProduct();
+            System.Diagnostics.Debug.WriteLine("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA:" + id);
+
+            var item = _service.GetProduct(id);
+            return File(item.Image, "image/png");
+        }
+
+        public IActionResult DisplayRandomImage(string categoryName)
+        {
+            System.Diagnostics.Debug.WriteLine("IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII:" + categoryName);
+
+            var item = _service.GetRandomProduct(categoryName);
             return File(item.Image, "image/png");
         }
 
@@ -43,14 +53,14 @@ namespace Assignment_WebShop_2.Controllers
 
 
             ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-            ViewData["DeadlineSortParm"] = sortOrder == "deadline_asc" ? "deadline_desc" : "deadline_asc";
+            ViewData["PriceSortParam"] = sortOrder == "price_asc" ? "price_desc" : "price_asc";
 
             switch (sortOrder)
             {
-                case "deadline_asc":
+                case "price_asc":
                     list.Products = list.Products.OrderBy(i => i.Price).ToList();
                     break;
-                case "deadline_desc":
+                case "price_desc":
                     list.Products = list.Products.OrderByDescending(i => i.Price).ToList();
                     break;
                 case "name_desc":
