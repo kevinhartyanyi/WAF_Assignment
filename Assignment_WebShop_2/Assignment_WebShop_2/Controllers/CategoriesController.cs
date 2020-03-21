@@ -20,24 +20,32 @@ namespace Assignment_WebShop_2.Controllers
             _service = context;
         }
 
+        public IActionResult AddProductToBasket(Product p)
+        {
+            System.Diagnostics.Debug.WriteLine("TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT");
+            _service.AddToBasket(p);
+            return BasketView();
+        }
+
         // GET: Categories
         public IActionResult Index()
         {
             return View(_service.GetCategories());
         }
 
+        public IActionResult BasketView()
+        {
+            return View(_service.GetBasket());
+        }
+
         public IActionResult DisplayImage(int id)
         {
-            System.Diagnostics.Debug.WriteLine("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA:" + id);
-
             var item = _service.GetProduct(id);
             return File(item.Image, "image/png");
         }
 
         public IActionResult DisplayRandomImage(string categoryName)
         {
-            System.Diagnostics.Debug.WriteLine("IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII:" + categoryName);
-
             var item = _service.GetRandomProduct(categoryName);
             return File(item.Image, "image/png");
         }

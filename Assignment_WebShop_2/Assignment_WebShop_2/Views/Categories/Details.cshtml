@@ -3,6 +3,10 @@
 @{
     ViewData["Title"] = "Details";
     Func<double,double,double> Prod = (a, b) => a * b;
+    void A(Product p)
+    {
+
+    }
 }
 
 <h1>Products in @Model.Name</h1>
@@ -22,26 +26,34 @@
     <tbody>
         @foreach (var item in Model.Products)
         {
-        <tr>
-            <td>
-                <img src="@Url.Action("DisplayImage", "Categories", new { id = item.ID })" class="category" />
-            </td>
-            <td>
-                <b>@Html.DisplayFor(model => item.Manufacturer)</b>
-            </td>
-            <td>
-                @Html.DisplayFor(model => item.ModelID)
-            </td>
-            <td style="white-space: pre-line">
-                @Html.DisplayFor(model => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(model => item.Price)
-            </td>
-            <td>
-                @Prod(item.Price, 1.27)
-            </td>
-        </tr>
+            @if (item.Available && item.Amount > 0)
+            {
+                <tr>
+                    <td>
+                        <img src="@Url.Action("DisplayImage", "Categories", new { id = item.ID })" class="category" />
+                    </td>
+                    <td>
+                        <b>@Html.DisplayFor(model => item.Manufacturer)</b>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.ModelID)
+                    </td>
+                    <td style="white-space: pre-line">
+                        @Html.DisplayFor(model => item.Description)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.Price)
+                    </td>
+                    <td>
+                        @Prod(item.Price, 1.27)
+                    </td>
+                    <td>
+                        
+                        
+                    </td>
+                </tr>
+
+            }
         }
     </tbody>
 </table>

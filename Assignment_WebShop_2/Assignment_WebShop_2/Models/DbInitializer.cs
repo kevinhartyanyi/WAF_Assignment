@@ -45,7 +45,7 @@ namespace Assignment_WebShop_2.Models
                             Manufacturer = "Light",
                             Amount = 10,
                             Available = true,
-                            CategoryId = 2,
+                            CategoryId = 1,
                             ModelID = 3101,
                             Price = 200,
                             Description = "In good shape",
@@ -72,7 +72,29 @@ namespace Assignment_WebShop_2.Models
                             Price = 100,
                             Description = "Works in the dark too",
                             Image = File.Exists(dark_lamp) ? File.ReadAllBytes(dark_lamp) : null
-                        }
+                        },
+                        new Product
+                        {
+                            Manufacturer = "Dark",
+                            Amount = 5,
+                            Available = false,
+                            CategoryId = 1,
+                            ModelID = 1111,
+                            Price = 1111,
+                            Description = "Not avalilable",
+                            Image = File.Exists(simple_lamp) ? File.ReadAllBytes(simple_lamp) : null
+                        },
+                        new Product
+                        {
+                            Manufacturer = "Dark",
+                            Amount = 0,
+                            Available = true,
+                            CategoryId = 1,
+                            ModelID = 2222,
+                            Price = 2222,
+                            Description = "0 amount",
+                            Image = File.Exists(simple_lamp) ? File.ReadAllBytes(simple_lamp) : null
+                        },
                     }
                 },
                 new Category

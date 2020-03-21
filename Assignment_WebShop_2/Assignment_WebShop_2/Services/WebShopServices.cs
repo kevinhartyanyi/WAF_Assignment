@@ -11,10 +11,26 @@ namespace Assignment_WebShop_2.Services
     {
         WebShopContext context;
         Random random;
+        Basket basket;
+
+     
+
         public WebShopServices(WebShopContext Context)
         {
             context = Context;
             random = new Random();
+            basket = new Basket();
+        }
+
+
+        public void AddToBasket(Product p)
+        {
+            basket.Add(p);
+        }
+
+        public Basket GetBasket()
+        {
+            return basket;
         }
 
         public void AddProductToCategory(Product p)
