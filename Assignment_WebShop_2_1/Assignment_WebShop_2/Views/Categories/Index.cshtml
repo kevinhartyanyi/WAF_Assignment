@@ -1,0 +1,35 @@
+﻿@model IEnumerable<Assignment_WebShop_2.Models.Category>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Categories</h1>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.ID">@Html.DisplayFor(modelItem => item.Name)</a>
+            </td>
+            <td>
+                <img src="@Url.Action("DisplayRandomImage", "Categories",  new { categoryName = item.Name })" class="category" />
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+<div>
+    <a asp-action="BasketView">Basket</a>
+</div>
