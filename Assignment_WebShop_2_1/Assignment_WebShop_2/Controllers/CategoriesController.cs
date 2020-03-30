@@ -18,12 +18,55 @@ namespace Assignment_WebShop_2.Controllers
         {
         }
 
-        public IActionResult AddProductToBasket(Product p)
+        public IActionResult AddProductToBasket(int id)
         {
-            System.Diagnostics.Debug.WriteLine("TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT");
-            _service.AddToBasket(p);
-            return BasketView();
+            _service.AddToBasket(id, _accountService.CurrentUserName);
+            //return Redirect(Request.Path);
+            return RedirectToAction("Index");
         }
+
+        public IActionResult RemoveFromBasket(int id)
+        {
+            _service.RemoveFromBasket(id, _accountService.CurrentUserName);
+            return RedirectToAction("Index");
+        }
+
+        public IActionResult EmptyBasket()
+        {
+            _service.EmptyBasket(_accountService.CurrentUserName);
+            //return Redirect(Request.Path);
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public IActionResult Buy()
+        {
+            // létrehozunk egy foglalást csak az alapadatokkal (apartman, dátumok)
+            BasketOrder order = _service.NewOrder();
+                                 
+            return View("Buy", order);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken] // védelem XSRF támadás ellen
+        public IActionResult Buy(BasketOrder order)
+        {
+            String userName;
+
+            //if (!_travelService.SaveRent(apartmentId, userName, rent))
+            //{
+            //    ModelState.AddModelError("", "A foglalás rögzítése sikertelen, kérem próbálja újra!");
+            //    return View("Index", rent);
+            //}
+
+            //// kiszámoljuk a teljes árat
+            //rent.TotalPrice = _travelService.GetPrice(apartmentId, rent);
+
+            //ViewBag.Message = "A foglalását sikeresen rögzítettük!";
+            //return View("Result", rent);
+            return View("Buy");
+        }
+
 
         // GET: Categories
         public IActionResult Index()
@@ -33,7 +76,7 @@ namespace Assignment_WebShop_2.Controllers
 
         public IActionResult BasketView()
         {
-            return View(_service.GetBasket());
+            return View(_service.GetBasketForUser(_accountService.CurrentUserName));
         }
 
         public IActionResult DisplayImage(int id)

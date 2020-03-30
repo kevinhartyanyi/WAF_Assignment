@@ -10,10 +10,9 @@ namespace Assignment_WebShop_2.Models
 {
     public class Basket
     {
-
         public Basket()
         {
-            elems = new List<Product>();
+            elems = new List<BasketElem>();            
         }
 
         [Key]
@@ -21,7 +20,6 @@ namespace Assignment_WebShop_2.Models
 
         public string UserName { get; set; }
 
-        public ICollection<Product> elems { get; set; }
-
+        public ICollection<BasketElem> elems { get; set; }
     }
 }

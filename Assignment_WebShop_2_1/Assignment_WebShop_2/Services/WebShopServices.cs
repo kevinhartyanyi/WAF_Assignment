@@ -11,7 +11,6 @@ namespace Assignment_WebShop_2.Services
     {
         WebShopContext context;
         Random random;
-        Basket basket;
 
      
 
@@ -19,18 +18,68 @@ namespace Assignment_WebShop_2.Services
         {
             context = Context;
             random = new Random();
-            basket = new Basket();
         }
 
-
-        public void AddToBasket(Product p)
+        public Basket GetBasketForUser(string userName)
         {
-            //basket.Add(p);
+            return context.Baskets
+                .Include(b => b.elems)
+                    .ThenInclude(elems => elems.product)
+                .FirstOrDefault(g => g.UserName == userName);
         }
 
-        public Basket GetBasket()
+        public void RemoveFromBasket(int productId, string userName)
         {
-            return basket;
+            var basket = GetBasketForUser(userName);
+
+            if(basket.elems.FirstOrDefault(x => x.product.ID == productId).amount > 0)
+            {
+                basket.elems.FirstOrDefault(x => x.product.ID == productId).amount -= 1;
+            }
+
+            context.SaveChanges();
+        }
+
+        public void EmptyBasket(string userName)
+        {
+            var basket = GetBasketForUser(userName);
+
+            basket.elems.Clear();
+
+            context.SaveChanges();
+        }
+
+        public void AddToBasket(int productId, string userName)
+        {
+            Product p = context.Products
+                .FirstOrDefault(i => i.ID == productId);
+            
+            var basket = GetBasketForUser(userName);
+            System.Diagnostics.Debug.WriteLine("RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR " + basket.elems.Count());
+            
+            var t = basket.elems.Where(i => i.product != null && i.product.ID == productId);
+            if(t.Count() == 0)
+            {
+                BasketElem elem = new BasketElem();
+                elem.product = p;
+                elem.amount = 1;
+                basket.elems.Add(elem);
+                System.Diagnostics.Debug.WriteLine("RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR " + context.Baskets.FirstOrDefault(g => g.UserName == userName).elems.Count());
+                
+            }
+            else
+            {
+                basket.elems.FirstOrDefault(x => x.product.ID == productId).amount += 1;
+            }
+
+            context.SaveChanges();
+        }
+
+        public BasketOrder NewOrder()
+        {
+            var order = new BasketOrder();
+
+            return order;
         }
 
         public void AddProductToCategory(Product p)
@@ -43,6 +92,8 @@ namespace Assignment_WebShop_2.Services
             {
                 throw new ArgumentNullException(nameof(p), "The item to add must not be null.");
             }
+
+            context.SaveChanges();
         }
 
         public List<Category> GetCategories(string contain = "")

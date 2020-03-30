@@ -17,56 +17,67 @@ namespace Assignment_WebShop_2.Services
         {
             _context = context;
             _httpContext = httpContextAccessor.HttpContext;
+            //_httpContext.Response.Cookies.Delete("user_challenge");
+            System.Diagnostics.Debug.WriteLine("AAAAAAAAAAAAAAAA " + _httpContext.Request.Cookies.ContainsKey("user_challenge"));
+            System.Diagnostics.Debug.WriteLine("AAAAAAAAAAAAAAAA " + !_httpContext.Session.Keys.Contains("user"));
 
-            //// ha a felhasználónak van sütije, de még nincs bejelentkezve, bejelentkeztetjük
-            //if (_httpcontext.request.cookies.containskey("user_challenge") &&
-            //    !_httpcontext.session.keys.contains("user"))
-            //{
-            //    guest guest = _context.guests.firstordefault(
-            //        g => g.userchallenge == _httpcontext.request.cookies["user_challenge"]);
-            //    // kikeressük a felhasználót
-            //    if (guest != null)
-            //    {
-            //        _httpcontext.session.setstring("user", guest.username);
+            // ha a felhasználónak van sütije, de még nincs bejelentkezve, bejelentkeztetjük
+            if (_httpContext.Request.Cookies.ContainsKey("user_challenge") &&
+                !_httpContext.Session.Keys.Contains("user"))
+            {
+                Basket user = _context.Baskets.FirstOrDefault(
+                    g => g.UserName == _httpContext.Request.Cookies["user_challenge"]);
+                System.Diagnostics.Debug.WriteLine("AAAAAAAAAAAAAAAA " + user.UserName);  
 
-            //    }
-            //}
+                // kikeressük a felhasználót
+                if (user != null)
+                {
+                    _httpContext.Session.SetString("user", user.UserName);
+                }
+            }
+            else if(!_httpContext.Session.Keys.Contains("user"))
+            {
+                Create();   
+            }
         }
         public String CurrentUserName => _httpContext.Session.GetString("user");
 
 
-        //public Boolean Create(GuestViewModel guest, out String userName)
-        //{
-        //    userName = "user" + Guid.NewGuid(); // a felhasználónevet generáljuk
+        public Boolean Create()
+        {
+            string userName = "user" + Guid.NewGuid(); // a felhasználónevet generáljuk
 
-        //    if (guest == null)
-        //        return false;
 
-        //    // ellenőrizzük az annotációkat
-        //    if (!Validator.TryValidateObject(guest, new ValidationContext(guest, null, null), null))
-        //        return false;
+            // elmentjük a felhasználó adatait
+            var allProducts = new List<BasketElem>();
+            
+            _context.Baskets.Add(new Basket
+            {
+                UserName = userName,
+                elems = allProducts,
+            });
 
-        //    // elmentjük a felhasználó adatait
-        //    _context.Guests.Add(new Guest
-        //    {
-        //        Name = guest.GuestName,
-        //        Address = guest.GuestAddress,
-        //        Email = guest.GuestEmail,
-        //        PhoneNumber = guest.GuestPhoneNumber,
-        //        UserName = userName
-        //    });
+            try
+            {
+                _context.SaveChanges();
+            }
+            catch
+            {
+                return false;
+            }
+            System.Diagnostics.Debug.WriteLine("AAAAAAAAAAAAAAAA CREATE " + userName);
 
-        //    try
-        //    {
-        //        _context.SaveChanges();
-        //    }
-        //    catch
-        //    {
-        //        return false;
-        //    }
+            _httpContext.Session.SetString("user", userName);
+            _httpContext.Response.Cookies.Append("user_challenge", userName, // nem a felhasználónevet, hanem egy generált kódot tárolunk
+                new CookieOptions
+                {
+                    Expires = DateTime.Today.AddDays(365), // egy évig lesz érvényes a süti
+                    HttpOnly = true, // igyekszünk biztonságosság tenni a sütit
+                                        //Secure = true,
+                });
 
-        //    return true;
-        //}
+            return true;
+        }
 
     }
 }

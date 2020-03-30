@@ -5,6 +5,28 @@
 }
 
 <h1>Categories</h1>
+<h1>@ViewBag.CurrentName</h1>
+
+
+<h3><a asp-action="BasketView">Basket</a></h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>All Base Price</th>
+            <th>All Price</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                @ViewBag.BasePrice
+            </td>
+            <td>
+                @ViewBag.Price
+            </td>
+        </tr>
+    </tbody>
+</table>
 
 
 <table class="table">
@@ -17,16 +39,17 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                <a asp-action="Details" asp-route-id="@item.ID">@Html.DisplayFor(modelItem => item.Name)</a>
-            </td>
-            <td>
-                <img src="@Url.Action("DisplayRandomImage", "Categories",  new { categoryName = item.Name })" class="category" />
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.ID">@Html.DisplayFor(modelItem => item.Name)</a>
+                </td>
+                <td>
+                    <img src="@Url.Action("DisplayRandomImage", "Categories",  new { categoryName = item.Name })" class="category" />
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
 

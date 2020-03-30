@@ -65,6 +65,9 @@ namespace Assignment_WebShop_2
 
             app.UseAuthorization();
 
+            //
+            app.UseSession();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

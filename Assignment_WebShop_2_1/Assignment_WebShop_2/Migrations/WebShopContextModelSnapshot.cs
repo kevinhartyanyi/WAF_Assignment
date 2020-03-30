@@ -34,6 +34,31 @@ namespace Assignment_WebShop_2.Migrations
                     b.ToTable("Baskets");
                 });
 
+            modelBuilder.Entity("Assignment_WebShop_2.Models.BasketElem", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("BasketID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("amount")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("productID")
+                        .HasColumnType("int");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("BasketID");
+
+                    b.HasIndex("productID");
+
+                    b.ToTable("BasketElem");
+                });
+
             modelBuilder.Entity("Assignment_WebShop_2.Models.Category", b =>
                 {
                     b.Property<int>("ID")
@@ -63,9 +88,6 @@ namespace Assignment_WebShop_2.Migrations
                     b.Property<bool>("Available")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("BasketID")
-                        .HasColumnType("int");
-
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
@@ -88,19 +110,24 @@ namespace Assignment_WebShop_2.Migrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("BasketID");
-
                     b.HasIndex("CategoryId");
 
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("Assignment_WebShop_2.Models.Product", b =>
+            modelBuilder.Entity("Assignment_WebShop_2.Models.BasketElem", b =>
                 {
                     b.HasOne("Assignment_WebShop_2.Models.Basket", null)
                         .WithMany("elems")
                         .HasForeignKey("BasketID");
 
+                    b.HasOne("Assignment_WebShop_2.Models.Product", "product")
+                        .WithMany()
+                        .HasForeignKey("productID");
+                });
+
+            modelBuilder.Entity("Assignment_WebShop_2.Models.Product", b =>
+                {
                     b.HasOne("Assignment_WebShop_2.Models.Category", "Category")
                         .WithMany("Products")
                         .HasForeignKey("CategoryId")

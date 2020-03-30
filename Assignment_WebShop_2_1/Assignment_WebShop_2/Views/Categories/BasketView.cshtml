@@ -1,11 +1,33 @@
-﻿@model Assignment_WebShop_2.Models.Basket
+﻿@using Assignment_WebShop_2.Models
+
+@model Basket
 
 @{
     ViewData["Title"] = "BasketView";
 }
 
 <h1>BasketView</h1>
+<h1>@ViewBag.CurrentName</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>All Base Price</th>
+            <th>All Price</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                @ViewBag.BasePrice
+            </td>
+            <td>
+                @ViewBag.Price
+            </td>
+        </tr>
+    </tbody>
+</table>
 
+<input type="button" value="Empty Basket" onclick="location.href='@Url.Action("EmptyBasket", "Categories")'" />
 
 <table class="table">
     <thead>
@@ -17,14 +39,30 @@
     <tbody>
         @foreach (var item in Model.elems)
         {
-            <tr>
-                <td>
-                    <img src="@Url.Action("DisplayImage", "Categories", new { id = item.ID })" class="category" />
-                </td>
-            </tr>
+
+            @if (item.product != null && item.amount > 0)
+            {
+                <tr>
+                    <td>
+                        <img src="@Url.Action("DisplayImage", "Categories", new { id = item.product.ID })" class="category" />
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.amount)
+                    </td>
+                    <td>
+                        <input type="button" value="Add To Basket" onclick="location.href='@Url.Action("AddProductToBasket", "Categories", new { id = item.product.ID })'" />
+                    </td>
+                    <td>
+                        <input type="button" value="Remove From Basket" onclick="location.href='@Url.Action("RemoveFromBasket", "Categories", new { id = item.product.ID })'" />
+                    </td>
+                </tr>
+            }
+
         }
-    </tbody>
+        </tbody>
 </table>
+
+
 
 
 <div>

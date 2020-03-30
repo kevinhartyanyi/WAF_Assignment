@@ -118,7 +118,7 @@ namespace Assignment_WebShop_2.Models
                         {
                             Manufacturer = "HP",
                             Amount = 2,
-                            Available = false,
+                            Available = true,
                             CategoryId = 2,
                             ModelID = 1424,
                             Price = 80,

@@ -2,14 +2,32 @@
 
 @{
     ViewData["Title"] = "Details";
-    Func<double,double,double> Prod = (a, b) => a * b;
-    void A(Product p)
-    {
-
-    }
+    Func<double, double, double> Prod = (a, b) => a * b;
 }
 
 <h1>Products in @Model.Name</h1>
+<h1>@ViewBag.CurrentName</h1>
+
+
+<h3><a asp-action="BasketView">Basket</a></h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>All Base Price</th>
+            <th>All Price</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                @ViewBag.BasePrice
+            </td>
+            <td>
+                @ViewBag.Price
+            </td>
+        </tr>
+    </tbody>
+</table>
 
 
 <table class="table">
@@ -48,8 +66,7 @@
                         @Prod(item.Price, 1.27)
                     </td>
                     <td>
-                        
-                        
+                        <input type="button" value="Add To Basket" onclick="location.href='@Url.Action("AddProductToBasket", "Categories", new { id = item.ID })'" />
                     </td>
                 </tr>
 
@@ -59,5 +76,5 @@
 </table>
 
 <div>
-    <a asp-action="Index">Back to Categories</a>
+    <a asp-action="Index">Back to Categories</a>    
 </div>
