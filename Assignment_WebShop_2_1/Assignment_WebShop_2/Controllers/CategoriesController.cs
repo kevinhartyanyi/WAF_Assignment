@@ -38,34 +38,7 @@ namespace Assignment_WebShop_2.Controllers
             return RedirectToAction("Index");
         }
 
-        [HttpGet]
-        public IActionResult Buy()
-        {
-            // létrehozunk egy foglalást csak az alapadatokkal (apartman, dátumok)
-            BasketOrder order = _service.NewOrder();
-                                 
-            return View("Buy", order);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken] // védelem XSRF támadás ellen
-        public IActionResult Buy(BasketOrder order)
-        {
-            String userName;
-
-            //if (!_travelService.SaveRent(apartmentId, userName, rent))
-            //{
-            //    ModelState.AddModelError("", "A foglalás rögzítése sikertelen, kérem próbálja újra!");
-            //    return View("Index", rent);
-            //}
-
-            //// kiszámoljuk a teljes árat
-            //rent.TotalPrice = _travelService.GetPrice(apartmentId, rent);
-
-            //ViewBag.Message = "A foglalását sikeresen rögzítettük!";
-            //return View("Result", rent);
-            return View("Buy");
-        }
+        
 
 
         // GET: Categories

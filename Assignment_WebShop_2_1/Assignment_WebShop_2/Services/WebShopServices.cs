@@ -82,6 +82,25 @@ namespace Assignment_WebShop_2.Services
             return order;
         }
 
+        public void SaveOrder(string userName, BasketOrder bOrder)
+        {
+            context.Orders.Add(new Order
+            {
+                UserName = userName,
+                Email = bOrder.Email,
+                Address = bOrder.Address,
+                PhoneNumber = bOrder.PhoneNumber
+            });
+
+            context.SaveChanges();
+        }
+
+        public double GetPrice(string userName)
+        {
+            List<BasketElem> elems = GetBasketForUser(userName).elems.ToList();
+            return elems.Where(x => x.amount > 0).Sum(x => x.amount * x.product.Price) * 1.27;
+        }
+
         public void AddProductToCategory(Product p)
         {
             if (p != null)

@@ -27,44 +27,49 @@
     </tbody>
 </table>
 
-<input type="button" value="Empty Basket" onclick="location.href='@Url.Action("EmptyBasket", "Categories")'" />
+@if (@ViewBag.Price > 0)
+{
+    <input type="button" value="Empty Basket" onclick="location.href='@Url.Action("EmptyBasket", "Categories")'" />
+}
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>Products</th>
-            <th>Amount</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.elems)
-        {
-
-            @if (item.product != null && item.amount > 0)
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Products</th>
+                <th>Amount</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.elems)
             {
-                <tr>
-                    <td>
-                        <img src="@Url.Action("DisplayImage", "Categories", new { id = item.product.ID })" class="category" />
-                    </td>
-                    <td>
-                        @Html.DisplayFor(model => item.amount)
-                    </td>
-                    <td>
-                        <input type="button" value="Add To Basket" onclick="location.href='@Url.Action("AddProductToBasket", "Categories", new { id = item.product.ID })'" />
-                    </td>
-                    <td>
-                        <input type="button" value="Remove From Basket" onclick="location.href='@Url.Action("RemoveFromBasket", "Categories", new { id = item.product.ID })'" />
-                    </td>
-                </tr>
+
+                @if (item.product != null && item.amount > 0)
+                {
+                    <tr>
+                        <td>
+                            <img src="@Url.Action("DisplayImage", "Categories", new { id = item.product.ID })" class="category" />
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => item.amount)
+                        </td>
+                        <td>
+                            <input type="button" value="Add To Basket" onclick="location.href='@Url.Action("AddProductToBasket", "Categories", new { id = item.product.ID })'" />
+                        </td>
+                        <td>
+                            <input type="button" value="Remove From Basket" onclick="location.href='@Url.Action("RemoveFromBasket", "Categories", new { id = item.product.ID })'" />
+                        </td>
+                    </tr>
+                }
+
             }
-
-        }
         </tbody>
-</table>
+    </table>
 
+    @if (@ViewBag.Price > 0)
+    {
+        <input type="button" value="Order" onclick="location.href='@Url.Action("Buy", "Order")'" />
+    }
 
-
-
-<div>
-    <a asp-action="Index">Back to Categories</a>
-</div>
+    <div>
+        <a asp-action="Index">Back to Categories</a>
+    </div>

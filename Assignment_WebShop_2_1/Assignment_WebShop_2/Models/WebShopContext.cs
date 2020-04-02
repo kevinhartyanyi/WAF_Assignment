@@ -13,6 +13,8 @@ namespace Assignment_WebShop_2.Models
         public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Basket> Baskets { get; set; }
+        public DbSet<Order> Orders { get; set; }
+
 
     }
 }

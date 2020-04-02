@@ -36,5 +36,11 @@ namespace Assignment_WebShop_2.Models
         [Phone(ErrorMessage = "A telefonszám formátuma nem megfelelő.")]
         [DataType(DataType.PhoneNumber)]
         public String PhoneNumber { get; set; }
+
+        /// <summary>
+        /// Teljes ár.
+        /// </summary>
+        [DataType(DataType.Currency)]
+        public double TotalPrice { get; set; }
     }
 }
