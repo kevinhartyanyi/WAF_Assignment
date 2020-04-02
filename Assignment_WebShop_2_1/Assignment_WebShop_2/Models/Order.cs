@@ -14,5 +14,8 @@ namespace Assignment_WebShop_2.Models
         public String Email { get; set; }
         public String Address { get; set; }
         public String PhoneNumber { get; set; }
+
+        public List<Product> OrderedProducts { get; set; }
+        public bool Delivered { get; set; }
     }
 }
