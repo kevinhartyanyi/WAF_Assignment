@@ -37,6 +37,8 @@ namespace Assignment_WebShop_2.Controllers
 
             // kiszámoljuk a teljes árat
             order.TotalPrice = _service.GetPrice(userName);
+            
+            _service.EmptyBasket(userName);
 
             return View("Result", order);
         }

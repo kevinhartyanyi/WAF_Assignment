@@ -86,13 +86,13 @@ namespace Assignment_WebShop_2.Services
         {
             context.Orders.Add(new Order
             {
-                UserName = userName,
+                UserName = bOrder.Name,
                 Email = bOrder.Email,
                 Address = bOrder.Address,
                 PhoneNumber = bOrder.PhoneNumber
             });
 
-            context.SaveChanges();
+            context.SaveChanges();            
         }
 
         public double GetPrice(string userName)
