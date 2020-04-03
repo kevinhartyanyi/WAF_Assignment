@@ -55,7 +55,6 @@ namespace Assignment_WebShop_2.Services
                 .FirstOrDefault(i => i.ID == productId);
             
             var basket = GetBasketForUser(userName);
-            System.Diagnostics.Debug.WriteLine("RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR " + basket.elems.Count());
             
             var t = basket.elems.Where(i => i.product != null && i.product.ID == productId);
             if(t.Count() == 0)
@@ -64,7 +63,6 @@ namespace Assignment_WebShop_2.Services
                 elem.product = p;
                 elem.amount = 1;
                 basket.elems.Add(elem);
-                System.Diagnostics.Debug.WriteLine("RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR " + context.Baskets.FirstOrDefault(g => g.UserName == userName).elems.Count());
                 
             }
             else

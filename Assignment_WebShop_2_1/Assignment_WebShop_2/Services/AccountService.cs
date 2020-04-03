@@ -18,8 +18,6 @@ namespace Assignment_WebShop_2.Services
             _context = context;
             _httpContext = httpContextAccessor.HttpContext;
             //_httpContext.Response.Cookies.Delete("user_challenge");
-            System.Diagnostics.Debug.WriteLine("AAAAAAAAAAAAAAAA " + _httpContext.Request.Cookies.ContainsKey("user_challenge"));
-            System.Diagnostics.Debug.WriteLine("AAAAAAAAAAAAAAAA " + !_httpContext.Session.Keys.Contains("user"));
 
             // ha a felhasználónak van sütije, de még nincs bejelentkezve, bejelentkeztetjük
             if (_httpContext.Request.Cookies.ContainsKey("user_challenge") &&

@@ -11,29 +11,29 @@ namespace Assignment_WebShop_2.Models
         /// <summary>
         /// Vendég neve.
         /// </summary>
-        [Required(ErrorMessage = "A név megadása kötelező.")] // feltételek a validáláshoz
-        [StringLength(60, ErrorMessage = "A foglaló neve maximum 60 karakter lehet.")]
+        [Required(ErrorMessage = "The name is required")] // feltételek a validáláshoz
+        [StringLength(60, ErrorMessage = "Max 60 length")]
         public String Name { get; set; }
 
         /// <summary>
         /// Vendég e-mail címe.
         /// </summary>
-        [Required(ErrorMessage = "Az e-mail cím megadása kötelező.")]
-        [EmailAddress(ErrorMessage = "Az e-mail cím nem megfelelő formátumú.")]
+        [Required(ErrorMessage = "E-mail is required")]
+        [EmailAddress(ErrorMessage = "Bad format for e-mail")]
         [DataType(DataType.EmailAddress)] // pontosítjuk az adatok típusát
         public String Email { get; set; }
 
         /// <summary>
         /// Vendég címe.
         /// </summary>
-        [Required(ErrorMessage = "A cím megadása kötelező.")]
+        [Required(ErrorMessage = "Address is required.")]
         public String Address { get; set; }
 
         /// <summary>
         /// Vendég telefonszáma.
         /// </summary>
-        [Required(ErrorMessage = "A telefonszám megadása kötelező.")]
-        [Phone(ErrorMessage = "A telefonszám formátuma nem megfelelő.")]
+        [Required(ErrorMessage = "Phone Number is required")]
+        [Phone(ErrorMessage = "Bad format for phone number")]
         [DataType(DataType.PhoneNumber)]
         public String PhoneNumber { get; set; }
 
