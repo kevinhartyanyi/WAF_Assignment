@@ -41,8 +41,8 @@
         {
             <tr>
                 <td>
-                    @*<a asp-action="Details" asp-route-id="@item.ID">@Html.DisplayFor(modelItem => item.Name, 1)</a>*@
-                    <input type="button" value=@item.Name onclick="location.href='@Url.Action("Details", "Categories", new { id = item.ID , sortOrder = item.Name, page = 1})'" />
+                    <a asp-action="Details" asp-route-id="@item.ID">@Html.DisplayFor(modelItem => item.Name, 1)</a>
+                    <input type="button" value="Details" onclick="location.href='@Url.Action("Details", "Categories", new { id = item.ID , sortOrder = item.Name, page = 1})'" />
                 </td>
                 <td>
                     <img src="@Url.Action("DisplayRandomImage", "Categories",  new { categoryName = item.Name })" class="category" />

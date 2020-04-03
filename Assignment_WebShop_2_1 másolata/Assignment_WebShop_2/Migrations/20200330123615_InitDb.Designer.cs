@@ -4,14 +4,16 @@ using Assignment_WebShop_2.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Assignment_WebShop_2.Migrations
 {
     [DbContext(typeof(WebShopContext))]
-    partial class WebShopContextModelSnapshot : ModelSnapshot
+    [Migration("20200330123615_InitDb")]
+    partial class InitDb
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -75,33 +77,6 @@ namespace Assignment_WebShop_2.Migrations
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("Assignment_WebShop_2.Models.Order", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Address")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("Delivered")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("Orders");
-                });
-
             modelBuilder.Entity("Assignment_WebShop_2.Models.Product", b =>
                 {
                     b.Property<int>("ID")
@@ -132,9 +107,6 @@ namespace Assignment_WebShop_2.Migrations
                     b.Property<int>("ModelID")
                         .HasColumnType("int");
 
-                    b.Property<int?>("OrderID")
-                        .HasColumnType("int");
-
                     b.Property<int>("Price")
                         .HasColumnType("int");
 
@@ -142,30 +114,7 @@ namespace Assignment_WebShop_2.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.HasIndex("OrderID");
-
                     b.ToTable("Products");
-                });
-
-            modelBuilder.Entity("Assignment_WebShop_2.Models.Worker", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserPassword")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("Workers");
                 });
 
             modelBuilder.Entity("Assignment_WebShop_2.Models.BasketElem", b =>
@@ -186,10 +135,6 @@ namespace Assignment_WebShop_2.Migrations
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("Assignment_WebShop_2.Models.Order", null)
-                        .WithMany("OrderedProducts")
-                        .HasForeignKey("OrderID");
                 });
 #pragma warning restore 612, 618
         }

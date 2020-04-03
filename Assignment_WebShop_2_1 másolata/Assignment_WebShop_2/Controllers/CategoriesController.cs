@@ -22,23 +22,21 @@ namespace Assignment_WebShop_2.Controllers
         public IActionResult AddProductToBasket(int id)
         {
             _service.AddToBasket(id, _accountService.CurrentUserName);
-            return Redirect(Request.Headers["Referer"].ToString());
-            //return RedirectToAction("Index");
+            //return Redirect(Request.Path);
+            return RedirectToAction("Index");
         }
 
         public IActionResult RemoveFromBasket(int id)
         {
             _service.RemoveFromBasket(id, _accountService.CurrentUserName);
-            return Redirect(Request.Headers["Referer"].ToString());
-            //return RedirectToAction("Index");
+            return RedirectToAction("Index");
         }
 
         public IActionResult EmptyBasket()
         {
             _service.EmptyBasket(_accountService.CurrentUserName);
             //return Redirect(Request.Path);
-            return Redirect(Request.Headers["Referer"].ToString());
-            //return RedirectToAction("Index");
+            return RedirectToAction("Index");
         }       
 
         // GET: Categories
@@ -72,8 +70,6 @@ namespace Assignment_WebShop_2.Controllers
             int skip = (page - 1) * 20;
             int take = 20;
 
-            ViewBag.More = list.Products.Skip(page * 20).Take(20).Count();
-
             if (list == null)
             {
                 return NotFound();
@@ -82,29 +78,24 @@ namespace Assignment_WebShop_2.Controllers
             ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewData["PriceSortParam"] = sortOrder == "price_asc" ? "price_desc" : "price_asc";
 
-            
-            ViewBag.SortOrder = sortOrder;
-            
-
             var tmp = list.Products.Skip(skip).Take(take);
 
             switch (sortOrder)
             {
                 case "price_asc":
-                    list.Products = list.Products.OrderBy(i => i.Price).Skip(skip).Take(take).ToList();
+                    list.Products = tmp.OrderBy(i => i.Price).ToList();
                     break;
                 case "price_desc":
-                    list.Products = list.Products.OrderByDescending(i => i.Price).Skip(skip).Take(take).ToList();
+                    list.Products = tmp.OrderByDescending(i => i.Price).ToList();
                     break;
                 case "name_desc":
-                    list.Products = list.Products.OrderByDescending(i => i.Manufacturer).Skip(skip).Take(take).ToList();
+                    list.Products = tmp.OrderByDescending(i => i.Manufacturer).ToList();
                     break;
                 default:
-                    list.Products = list.Products.OrderBy(i => i.Manufacturer).Skip(skip).Take(take).ToList();
+                    list.Products = tmp.OrderBy(i => i.Manufacturer).ToList();
                     break;
             }
 
-            ViewBag.Page = page;
             
 
             return View(list);

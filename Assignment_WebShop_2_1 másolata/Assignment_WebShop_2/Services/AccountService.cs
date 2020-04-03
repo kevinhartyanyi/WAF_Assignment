@@ -27,6 +27,7 @@ namespace Assignment_WebShop_2.Services
             {
                 Basket user = _context.Baskets.FirstOrDefault(
                     g => g.UserName == _httpContext.Request.Cookies["user_challenge"]);
+                System.Diagnostics.Debug.WriteLine("AAAAAAAAAAAAAAAA " + user.UserName);  
 
                 // kikeressük a felhasználót
                 if (user != null)
