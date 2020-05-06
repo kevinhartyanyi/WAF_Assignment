@@ -32,8 +32,8 @@
                 <DataGrid ItemsSource="{Binding Categories}"
                           SelectedItem="{Binding SelectedCategory, Converter={StaticResource SelectedCategoryConverter}}"
                           VerticalContentAlignment="Stretch" SelectionMode="Single" SelectionUnit="FullRow"
-                          CanUserAddRows="True" CanUserDeleteRows="True"
-                          AutoGenerateColumns="False" HeadersVisibility="Row">
+                          CanUserAddRows="False" CanUserDeleteRows="False"
+                          AutoGenerateColumns="False" HeadersVisibility="Row" IsReadOnly="True">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="SelectionChanged">
                             <i:InvokeCommandAction
@@ -81,8 +81,12 @@
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
-                        <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
-                        <DataGridTextColumn Header="Deadline" Binding="{Binding Deadline}" />
+                        <DataGridTextColumn Header="Manufacturer" Binding="{Binding Manufacturer}" />
+                        <DataGridTextColumn Header="ModelID" Binding="{Binding ModelID}" />
+                        <DataGridTextColumn Header="Price" Binding="{Binding Price}" />
+                        <DataGridTextColumn Header="Amount" Binding="{Binding Amount}" />
+                        <DataGridTextColumn Header="Available" Binding="{Binding Available}" />
+                        <DataGridTextColumn Header="Category" Binding="{Binding Category}" />
                         <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="*">
                             <DataGridTextColumn.ElementStyle>
                                 <Style TargetType="TextBlock">
@@ -94,9 +98,7 @@
                 </DataGrid>
             </GroupBox>
             <StackPanel Grid.Row="2" Orientation="Horizontal">
-                <Button Width="73"  Height="21" Margin="5" Content="Add Item" Command="{Binding AddItemCommand}" />
-                <Button Width="73"  Height="21" Margin="5" Content="Edit Item" Command="{Binding EditItemCommand}" />
-                <Button Width="73"  Height="21" Margin="5" Content="Delete Item" Command="{Binding DeleteItemCommand}" />
+                <Button Width="73"  Height="21" Margin="5" Content="Increment" Command="{Binding IncrementProductCommand}" />
             </StackPanel>
         </Grid>
     </DockPanel>

@@ -62,7 +62,7 @@ namespace Client.Model
 
         public async Task<IEnumerable<CategoryDTO>> LoadListsAsync()
         {
-            HttpResponseMessage response = await _client.GetAsync("api/Categories/");
+            HttpResponseMessage response = await _client.GetAsync("api/categories/");
 
             if (response.IsSuccessStatusCode)
             {
@@ -76,8 +76,7 @@ namespace Client.Model
 
         public async Task<IEnumerable<ProductDTO>> LoadItemsAsync(int listId)
         {
-            HttpResponseMessage response = await _client.GetAsync(
-                QueryHelpers.AddQueryString("api/products/category/", "listId", listId.ToString())); //Check TODO
+            HttpResponseMessage response = await _client.GetAsync("api/products/category/" + listId.ToString()); //Check TODO
 
             if (response.IsSuccessStatusCode)
             {
@@ -89,7 +88,7 @@ namespace Client.Model
 
         public async Task UpdateProductAsync(ProductDTO item)
         {
-            HttpResponseMessage response = await _client.PutAsJsonAsync($"api/items/{item.Id}", item);
+            HttpResponseMessage response = await _client.PutAsJsonAsync($"api/products/{item.Id}", item);
 
             if (!response.IsSuccessStatusCode)
             {

@@ -144,6 +144,25 @@ namespace Data.Services
                 .Single(x => x.ID == id);
         }
 
+        public bool UpdateProduct(Product pro)
+        {
+            try
+            {
+                context.Update(pro);
+                context.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                return false;
+            }
+            catch (DbUpdateException)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
         public IEnumerable<Product> GetAllProducts()
         {
             return context.Products

@@ -109,5 +109,25 @@ namespace WebAPI.Controllers
         }
 
 
+        //[Authorize] TODO
+        [HttpPut("{id}")]
+        public IActionResult PutProduct(Int32 id, ProductDTO pro)
+        {
+            if (id != pro.Id)
+            {
+                return BadRequest();
+            }
+
+            if (_service.UpdateProduct((Product)pro))
+            {
+                return Ok();
+            }
+            else
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
+
+
     }
 }
