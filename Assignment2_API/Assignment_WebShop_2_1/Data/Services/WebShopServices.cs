@@ -82,12 +82,16 @@ namespace Data.Services
 
         public void SaveOrder(string userName, BasketOrder bOrder)
         {
+            Basket basket = GetBasketForUser(userName);
+
             context.Orders.Add(new Order
             {
                 UserName = bOrder.Name,
                 Email = bOrder.Email,
                 Address = bOrder.Address,
-                PhoneNumber = bOrder.PhoneNumber
+                PhoneNumber = bOrder.PhoneNumber,
+                Delivered = false,
+                OrderedProducts = basket.elems.ToList()
             });
 
             context.SaveChanges();
@@ -161,6 +165,31 @@ namespace Data.Services
             }
 
             return true;
+        }
+        public bool UpdateOrder(Order o)
+        {
+            try
+            {
+                context.Update(o);
+                context.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                return false;
+            }
+            catch (DbUpdateException)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public IEnumerable<Order> GetOrders()
+        {
+            return context.Orders
+                .Include(x => x.OrderedProducts)
+                    .ThenInclude(elems => elems.product);
         }
 
         public IEnumerable<Product> GetAllProducts()

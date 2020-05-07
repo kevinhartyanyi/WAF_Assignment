@@ -82,12 +82,16 @@ namespace Assignment_WebShop_2.Services
 
         public void SaveOrder(string userName, BasketOrder bOrder)
         {
+            Basket basket = GetBasketForUser(userName);
+
             context.Orders.Add(new Order
             {
                 UserName = bOrder.Name,
                 Email = bOrder.Email,
                 Address = bOrder.Address,
-                PhoneNumber = bOrder.PhoneNumber
+                PhoneNumber = bOrder.PhoneNumber,
+                Delivered = false,
+                OrderedProducts = basket.elems.ToList()
             });
 
             context.SaveChanges();            

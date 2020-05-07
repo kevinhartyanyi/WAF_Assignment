@@ -35,7 +35,8 @@ namespace Data
             Description = dto.Description,
             ModelID = dto.ModelID, 
             Category = new Category { ID = dto.Category.Id, Name = dto.Category.Name},
-            Image = dto.Image
+            Image = dto.Image,
+            CategoryId = dto.Category.Id // Check TODO
         };
 
         public static explicit operator ProductDTO(Product i) => new ProductDTO

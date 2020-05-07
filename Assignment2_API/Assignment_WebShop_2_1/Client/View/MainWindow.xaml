@@ -16,6 +16,7 @@
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="_Database">
                 <MenuItem Header="_Refresh lists" Command="{Binding RefreshListsCommand}" />
+                <MenuItem Header="Orders" Command="{Binding OrdersCommand}" />
                 <MenuItem Header="_Logout" Command="{Binding LogoutCommand}" />
             </MenuItem>
         </Menu>
@@ -99,6 +100,8 @@
             </GroupBox>
             <StackPanel Grid.Row="2" Orientation="Horizontal">
                 <Button Width="73"  Height="21" Margin="5" Content="Increment" Command="{Binding IncrementProductCommand}" />
+                <Button Width="73"  Height="21" Margin="5" Content="Disable" Command="{Binding DisableCommand}" />
+                <Button Width="73"  Height="21" Margin="5" Content="Enable" Command="{Binding EnableCommand}" />
             </StackPanel>
         </Grid>
     </DockPanel>

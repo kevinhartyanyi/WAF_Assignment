@@ -82,10 +82,12 @@ namespace Client.ViewModel
 
         public DelegateCommand RefreshListsCommand { get; private set; }
         public DelegateCommand SelectCategoryCommand { get; private set; }
-
+        
         public DelegateCommand LogoutCommand { get; private set; }
-
+        public DelegateCommand OrdersCommand { get; private set; }
         public DelegateCommand IncrementProductCommand { get; private set; }
+        public DelegateCommand DisableCommand { get; private set; }
+        public DelegateCommand EnableCommand { get; private set; }
 
         public event EventHandler LogoutSucceeded;
 
@@ -98,7 +100,11 @@ namespace Client.ViewModel
             LogoutCommand = new DelegateCommand(_ => LogoutAsync());
             SelectCategoryCommand = new DelegateCommand(_ => LoadItemsAsync(SelectedCategory));
 
-            IncrementProductCommand = new DelegateCommand(_ => !(SelectedProduct is null), _ => IncrementProduct(SelectedProduct));
+            IncrementProductCommand = new DelegateCommand(_ => !(SelectedProduct is null) && SelectedProduct.Available, _ => IncrementProduct(SelectedProduct));
+
+            DisableCommand = new DelegateCommand(_ => !(SelectedProduct is null) && SelectedProduct.Available, _ => DisableProduct(SelectedProduct));
+
+            EnableCommand = new DelegateCommand(_ => !(SelectedProduct is null) && !SelectedProduct.Available, _ => EnableProduct(SelectedProduct));
         }
 
         #region Authentication
@@ -169,8 +175,33 @@ namespace Client.ViewModel
             catch (Exception ex) when (ex is NetworkException || ex is HttpRequestException)
             {
                 OnMessageApplication($"Unexpected error occured! ({ex.Message})");
+            }           
+        }
+
+        private async void DisableProduct(ProductViewModel item)
+        {
+            try
+            {
+                item.Available = false;
+                await _service.UpdateProductAsync((ProductDTO)item);
             }
-            
+            catch (Exception ex) when (ex is NetworkException || ex is HttpRequestException)
+            {
+                OnMessageApplication($"Unexpected error occured! ({ex.Message})");
+            }
+        }
+
+        private async void EnableProduct(ProductViewModel item)
+        {
+            try
+            {
+                item.Available = true;
+                await _service.UpdateProductAsync((ProductDTO)item);
+            }
+            catch (Exception ex) when (ex is NetworkException || ex is HttpRequestException)
+            {
+                OnMessageApplication($"Unexpected error occured! ({ex.Message})");
+            }
         }
     }
 }
