@@ -72,6 +72,18 @@ namespace Client.Model
             throw new NetworkException("Service returned response: " + response.StatusCode);
         }
 
+        public async Task<IEnumerable<OrderDTO>> LoadOrdersAsync()
+        {
+            HttpResponseMessage response = await _client.GetAsync("api/order/");
+
+            if (response.IsSuccessStatusCode)
+            {
+                return await response.Content.ReadAsAsync<IEnumerable<OrderDTO>>();
+            }
+
+            throw new NetworkException("Service returned response: " + response.StatusCode);
+        }
+
 
 
         public async Task<IEnumerable<ProductDTO>> LoadItemsAsync(int listId)

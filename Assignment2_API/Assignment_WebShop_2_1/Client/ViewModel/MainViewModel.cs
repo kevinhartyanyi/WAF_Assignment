@@ -91,6 +91,8 @@ namespace Client.ViewModel
 
         public event EventHandler LogoutSucceeded;
 
+        public event EventHandler OpenOrders;
+
         public MainViewModel(ClientAPIService service)
         {
             _service = service;
@@ -105,6 +107,8 @@ namespace Client.ViewModel
             DisableCommand = new DelegateCommand(_ => !(SelectedProduct is null) && SelectedProduct.Available, _ => DisableProduct(SelectedProduct));
 
             EnableCommand = new DelegateCommand(_ => !(SelectedProduct is null) && !SelectedProduct.Available, _ => EnableProduct(SelectedProduct));
+
+            OrdersCommand = new DelegateCommand(_ => OpenOrders?.Invoke(this, EventArgs.Empty));
         }
 
         #region Authentication

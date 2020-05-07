@@ -9,7 +9,6 @@ namespace Client.ViewModel
 {
     public class CategoryViewModel : ViewModelBase, IEditableObject
     {
-
         private int _id;
         private string _name;
 
