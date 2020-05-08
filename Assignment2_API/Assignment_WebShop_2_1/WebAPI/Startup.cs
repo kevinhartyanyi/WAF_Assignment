@@ -29,19 +29,19 @@ namespace WebAPI
             services.AddDbContext<WebShopContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("SqlServerConnection")));
 
+            
 
-
-            //services.AddIdentity<ApplicationUser, IdentityRole>(options =>
-            //{
-            //    options.Password.RequireDigit = false;
-            //    options.Password.RequiredLength = 3;
-            //    options.Password.RequiredUniqueChars = 0;
-            //    options.Password.RequireLowercase = false;
-            //    options.Password.RequireNonAlphanumeric = false;
-            //    options.Password.RequireUppercase = false;
-            //})
-            //.AddEntityFrameworkStores<WebShopContext>()
-            //.AddDefaultTokenProviders();
+            services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+            {
+                options.Password.RequireDigit = false;
+                options.Password.RequiredLength = 3;
+                options.Password.RequiredUniqueChars = 0;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+            })
+            .AddEntityFrameworkStores<WebShopContext>()
+            .AddDefaultTokenProviders();
 
 
             services.AddTransient<WebShopServices>();

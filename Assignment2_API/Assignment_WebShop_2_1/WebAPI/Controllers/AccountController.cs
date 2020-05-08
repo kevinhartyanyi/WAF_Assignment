@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Data;
+using Data.Models;
 
 namespace WebAPI.Controllers
 {
@@ -19,6 +21,7 @@ namespace WebAPI.Controllers
         public AccountController(SignInManager<ApplicationUser> signInManager)
         {
             _signInManager = signInManager;
+            
         }
 
         // api/Account/Login
