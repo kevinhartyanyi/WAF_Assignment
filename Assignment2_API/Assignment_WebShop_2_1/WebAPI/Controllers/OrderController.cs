@@ -61,6 +61,52 @@ namespace WebAPI.Controllers
             }
         }
 
+        [HttpGet("{id}")]
+        public IActionResult GetOrder(int id)
+        {
+            try
+            {
+                var o = _service.GetOrderByID(id);
+
+                return Ok(new OrderDTO
+                {
+                    ID = o.ID,
+                    UserName = o.UserName,
+                    Email = o.Email,
+                    Address = o.Address,
+                    PhoneNumber = o.PhoneNumber,
+                    Delivered = o.Delivered,
+                    OrderedProducts = new List<BasketElemDTO>(o.OrderedProducts.Select(x => new BasketElemDTO
+                    {
+                        amount = x.amount,
+                        Id = x.ID,
+                        product = new ProductDTO
+                        {
+                            Id = x.product.ID,
+                            Amount = x.product.Amount,
+                            Available = x.product.Available,
+                            Category = new CategoryDTO { Id = x.product.CategoryId, Name = _service.GetCategoryByID(x.product.CategoryId).Name },
+                            Description = x.product.Description,
+                            Image = x.product.Image,
+                            Manufacturer = x.product.Manufacturer,
+                            ModelID = x.product.ModelID,
+                            Price = x.product.Price
+                        }
+                    }))
+                });
+            }
+            catch (InvalidOperationException)
+            {
+                // Single() nem adott eredményt
+                return NotFound();
+            }
+            catch
+            {
+                // Internal Server Error
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
+
         //[Authorize] TODO
         [HttpPut("{id}")]
         public IActionResult PutOrder(Int32 id, OrderDTO o)

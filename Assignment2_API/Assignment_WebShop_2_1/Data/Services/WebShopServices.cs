@@ -192,6 +192,14 @@ namespace Data.Services
                     .ThenInclude(elems => elems.product);
         }
 
+        public Order GetOrderByID(int id)
+        {
+            return context.Orders
+                .Include(x => x.OrderedProducts)
+                    .ThenInclude(elems => elems.product)
+                .Single(x => x.ID == id);
+        }
+
         public IEnumerable<Product> GetAllProducts()
         {
             return context.Products

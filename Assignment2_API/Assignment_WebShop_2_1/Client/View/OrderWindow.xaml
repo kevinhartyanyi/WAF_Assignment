@@ -7,9 +7,10 @@
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:viewModel="clr-namespace:Client.ViewModel"
         mc:Ignorable="d"
-        Title="OrderWindow" Height="450" Width="800">
+        Title="OrderWindow" Height="800" Width="800">
     <Window.Resources>
         <viewModel:SelectedCategoryConverter x:Key="SelectedCategoryConverter" />
+        <viewModel:SelectedOrderConverter x:Key="SelectedOrderConverter" />
     </Window.Resources>
     <DockPanel>
         <Menu DockPanel.Dock="Top">
@@ -20,19 +21,28 @@
         </Menu>
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="*" />
-                <RowDefinition Height="3*" />
+                <RowDefinition Height="40" />
+                <RowDefinition Height="100*" />
+                <RowDefinition Height="48*"/>
+                <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <GroupBox Grid.Row="0">
+            <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,0">
+                <Button Width="73"  Height="21" Margin="5" Content="Name" Command="{Binding SearchName}" />
+                <Button Width="73"  Height="21" Margin="5" Content="Date" Command="{Binding SearchAddress}" />
+                <Button Width="73"  Height="21" Margin="5" Content="Delivered" Command="{Binding SearchDelivered}" />
+                <Label Width="50"  Height="30" Margin="5" Content="Search:"/>
+                <TextBox Width="200"  Height="30" Margin="0" Name="txtName" Text="{Binding SearchText}" />
+            </StackPanel>
+            <GroupBox Grid.Row="1" Grid.RowSpan="1">
                 <GroupBox.Header>
                     <Label Content="Lists:" />
                 </GroupBox.Header>
                 <DataGrid ItemsSource="{Binding Categories}"
-                          SelectedItem="{Binding SelectedCategory, Converter={StaticResource SelectedCategoryConverter}}"
+                          SelectedItem="{Binding SelectedCategory, Converter={StaticResource SelectedOrderConverter}}"
                           VerticalContentAlignment="Stretch" SelectionMode="Single" SelectionUnit="FullRow"
                           CanUserAddRows="False" CanUserDeleteRows="False"
-                          AutoGenerateColumns="False" HeadersVisibility="Row" IsReadOnly="True">
+                          AutoGenerateColumns="False" IsReadOnly="True">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="SelectionChanged">
                             <i:InvokeCommandAction
@@ -59,12 +69,15 @@
                         </ControlTemplate>
                     </DataGrid.RowValidationErrorTemplate>
                     <DataGrid.Columns>
-                        <DataGridTextColumn Binding="{Binding Name}"
-                                            Width="*" />
+                        <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
+                        <DataGridTextColumn Header="Address" Binding="{Binding Address}" />
+                        <DataGridTextColumn Header="Email" Binding="{Binding Email}" />
+                        <DataGridTextColumn Header="PhoneNumber" Binding="{Binding Phone}" />
+                        <DataGridTextColumn Header="Delivered" Binding="{Binding Delivered}" Width="*"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </GroupBox>
-            <GroupBox Grid.Row="1">
+            <GroupBox Grid.Row="2" Margin="0,48,0,0" Grid.RowSpan="2">
                 <GroupBox.Header>
                     <Label Content="Items:" />
                 </GroupBox.Header>
@@ -83,7 +96,7 @@
                         <DataGridTextColumn Header="Manufacturer" Binding="{Binding Manufacturer}" />
                         <DataGridTextColumn Header="ModelID" Binding="{Binding ModelID}" />
                         <DataGridTextColumn Header="Price" Binding="{Binding Price}" />
-                        <DataGridTextColumn Header="Amount" Binding="{Binding Amount}" />
+                        <DataGridTextColumn Header="Ordered Amount" Binding="{Binding Amount}" />
                         <DataGridTextColumn Header="Available" Binding="{Binding Available}" />
                         <DataGridTextColumn Header="Category" Binding="{Binding Category}" />
                         <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="*">
@@ -96,10 +109,10 @@
                     </DataGrid.Columns>
                 </DataGrid>
             </GroupBox>
-            <StackPanel Grid.Row="2" Orientation="Horizontal">
-                <Button Width="73"  Height="21" Margin="5" Content="Increment" Command="{Binding IncrementProductCommand}" />
-                <Button Width="73"  Height="21" Margin="5" Content="Disable" Command="{Binding DisableCommand}" />
-                <Button Width="73"  Height="21" Margin="5" Content="Enable" Command="{Binding EnableCommand}" />
+            <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="0,289,0,0">
+                <Button Width="73"  Height="21" Margin="5" Content="Deliver" Command="{Binding Deliver}" />
+                <Button Width="73" Visibility="{Binding AskDeliver}" Background="Green"  Height="21" Margin="5" Content="Start Deliver" Command="{Binding StartDeliver}" />
+                <Button Width="73" Visibility="{Binding AskDeliver}" Background="Red"  Height="21" Margin="5" Content="Stop Deliver" Command="{Binding StopDeliver}" />
             </StackPanel>
         </Grid>
     </DockPanel>

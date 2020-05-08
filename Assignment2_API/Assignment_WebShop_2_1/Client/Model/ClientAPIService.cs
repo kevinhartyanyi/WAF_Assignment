@@ -98,6 +98,40 @@ namespace Client.Model
             throw new NetworkException("Service returned response: " + response.StatusCode);
         }
 
+        public async Task<ProductDTO> LoadProductAsync(int listId)
+        {
+            HttpResponseMessage response = await _client.GetAsync("api/products/" + listId.ToString()); //Check TODO
+
+            if (response.IsSuccessStatusCode)
+            {
+                return await response.Content.ReadAsAsync<ProductDTO>();
+            }
+
+            throw new NetworkException("Service returned response: " + response.StatusCode);
+        }
+
+        public async Task<OrderDTO> LoadOrderProductAsync(int listId)
+        {
+            HttpResponseMessage response = await _client.GetAsync("api/order/" + listId.ToString()); //Check TODO
+
+            if (response.IsSuccessStatusCode)
+            {
+                return await response.Content.ReadAsAsync<OrderDTO>();
+            }
+
+            throw new NetworkException("Service returned response: " + response.StatusCode);
+        }
+
+        public async Task UpdateOrderAsync(OrderDTO item)
+        {
+            HttpResponseMessage response = await _client.PutAsJsonAsync($"api/order/{item.ID}", item);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new NetworkException("Service returned response: " + response.StatusCode);
+            }
+        }
+
         public async Task UpdateProductAsync(ProductDTO item)
         {
             HttpResponseMessage response = await _client.PutAsJsonAsync($"api/products/{item.Id}", item);
