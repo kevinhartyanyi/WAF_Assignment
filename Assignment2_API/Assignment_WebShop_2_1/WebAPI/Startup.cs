@@ -1,19 +1,15 @@
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
 using Data.Models;
 using Data.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 
 namespace WebAPI
@@ -32,6 +28,20 @@ namespace WebAPI
         {
             services.AddDbContext<WebShopContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("SqlServerConnection")));
+
+
+
+            //services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+            //{
+            //    options.Password.RequireDigit = false;
+            //    options.Password.RequiredLength = 3;
+            //    options.Password.RequiredUniqueChars = 0;
+            //    options.Password.RequireLowercase = false;
+            //    options.Password.RequireNonAlphanumeric = false;
+            //    options.Password.RequireUppercase = false;
+            //})
+            //.AddEntityFrameworkStores<WebShopContext>()
+            //.AddDefaultTokenProviders();
 
 
             services.AddTransient<WebShopServices>();

@@ -22,7 +22,7 @@ namespace Client
         private OrderViewModel _orderViewModel;
         private MainWindow _mainView;
         private OrderWindow _orderView;
-        //private LoginWindow _loginView;
+        private LoginWindow _loginView;
 
         public App()
         {
@@ -39,10 +39,10 @@ namespace Client
             _loginViewModel.LoginFailed += ViewModel_LoginFailed;
             _loginViewModel.MessageApplication += ViewModel_MessageApplication;
 
-            //_loginView = new LoginWindow
-            //{
-            //    DataContext = _loginViewModel
-            //};
+            _loginView = new LoginWindow
+            {
+                DataContext = _loginViewModel
+            };
 
             _orderViewModel = new OrderViewModel(_service);
             _orderViewModel.CloseOrders += ViewModel_CloseOrders;
@@ -61,13 +61,13 @@ namespace Client
             {
                 DataContext = _mainViewModel
             };
-            _mainView.Show();
-            //_loginView.Show();
+            //_mainView.Show();
+            _loginView.Show();
         }
 
         private void ViewModel_LoginSucceeded(object sender, EventArgs e)
         {
-            //_loginView.Hide();
+            _loginView.Hide();
             _mainView.Show();
         }
 
@@ -91,7 +91,7 @@ namespace Client
         private void ViewModel_LogoutSucceeded(object sender, EventArgs e)
         {
             _mainView.Hide();
-            //_loginView.Show();
+            _loginView.Show();
         }
 
         private void ViewModel_MessageApplication(object sender, MessageEventArgs e)

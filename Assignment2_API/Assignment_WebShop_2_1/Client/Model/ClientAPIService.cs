@@ -24,13 +24,13 @@ namespace Client.Model
 
         public async Task<bool> LoginAsync(string name, string password)
         {
-            //LoginDto user = new LoginDto
-            //{
-            //    UserName = name,
-            //    Password = password
-            //};
+            LoginDTO user = new LoginDTO
+            {
+                UserName = name,
+                Password = password
+            };
 
-            HttpResponseMessage response = null;//await _client.PostAsJsonAsync("api/Account/Login", user);
+            HttpResponseMessage response = await _client.PostAsJsonAsync("api/Account/Login", user);
 
             if (response.IsSuccessStatusCode)
             {
