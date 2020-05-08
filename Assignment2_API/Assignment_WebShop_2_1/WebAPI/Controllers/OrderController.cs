@@ -120,6 +120,7 @@ namespace WebAPI.Controllers
             {
                 OrderedProducts = new List<BasketElem>(o.OrderedProducts.Select(x => new BasketElem
                 {
+                    ID = x.Id,
                     amount = x.amount,
                     product = new Product
                     {

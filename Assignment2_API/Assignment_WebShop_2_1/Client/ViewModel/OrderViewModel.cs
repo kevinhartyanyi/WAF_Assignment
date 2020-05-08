@@ -159,29 +159,34 @@ namespace Client.ViewModel
                 //    });
                 //}
 
-                List<BasketElemDTO> newOrdProducts = new List<BasketElemDTO>();
-                foreach (var x in ord.OrderedProducts)
-                {
-                    newOrdProducts.Add(new BasketElemDTO
-                    {
-                        amount = x.amount,
-                        Id = x.Id,
-                        product = new ProductDTO
-                        {
-                            Id = x.product.Id,
-                            Amount = x.product.Amount - x.amount,
-                            Available = x.product.Available,
-                            Category = new CategoryDTO { Id = x.product.Category.Id, Name = x.product.Category.Name },
-                            Description = x.product.Description,
-                            Image = x.product.Image,
-                            Manufacturer = x.product.Manufacturer,
-                            ModelID = x.product.ModelID,
-                            Price = x.product.Price
-                        }
-                    });
-                }
+                //List<BasketElemDTO> newOrdProducts = new List<BasketElemDTO>();
+                //foreach (var x in ord.OrderedProducts)
+                //{
+                //    newOrdProducts.Add(new BasketElemDTO
+                //    {
+                //        amount = x.amount,
+                //        Id = x.Id,
+                //        product = new ProductDTO
+                //        {
+                //            Id = x.product.Id,
+                //            Amount = x.product.Amount - x.amount,
+                //            Available = x.product.Available,
+                //            Category = new CategoryDTO { Id = x.product.Category.Id, Name = x.product.Category.Name },
+                //            Description = x.product.Description,
+                //            Image = x.product.Image,
+                //            Manufacturer = x.product.Manufacturer,
+                //            ModelID = x.product.ModelID,
+                //            Price = x.product.Price
+                //        }
+                //    });
+                //}
 
-                ord.OrderedProducts = newOrdProducts;
+                //ord.OrderedProducts = newOrdProducts;
+
+                foreach (var item in ord.OrderedProducts)
+                {
+                    item.product.Amount = item.product.Amount - item.amount;
+                }
 
                 //foreach (var item in pros)
                 //{

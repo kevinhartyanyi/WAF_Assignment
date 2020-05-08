@@ -61,8 +61,8 @@ namespace Client
             {
                 DataContext = _mainViewModel
             };
-            //_mainView.Show();
-            _loginView.Show();
+            _mainView.Show();
+            //_loginView.Show();
         }
 
         private void ViewModel_LoginSucceeded(object sender, EventArgs e)
