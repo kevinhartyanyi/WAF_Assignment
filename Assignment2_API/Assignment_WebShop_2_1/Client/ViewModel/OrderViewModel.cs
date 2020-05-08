@@ -185,7 +185,7 @@ namespace Client.ViewModel
 
                 foreach (var item in ord.OrderedProducts)
                 {
-                    item.product.Amount = item.product.Amount - item.amount;
+                    item.product.Amount = (await _service.LoadProductAsync(item.product.Id)).Amount - item.amount;
                 }
 
                 //foreach (var item in pros)
