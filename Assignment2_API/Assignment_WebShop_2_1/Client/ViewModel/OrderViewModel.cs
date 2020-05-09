@@ -105,8 +105,6 @@ namespace Client.ViewModel
         {
             _service = service;
 
-            RefreshListsCommand = new DelegateCommand(_ => LoadListsAsync());
-
             SelectCategoryCommand = new DelegateCommand(_ => LoadItemsAsync(SelectedCategory));
 
             SearchName = new DelegateCommand(_ => MySearch(SearchText, 0));
@@ -133,6 +131,8 @@ namespace Client.ViewModel
             SearchText = "";
 
             AskDeliver = Visibility.Hidden;
+
+            MySearch("", 0);
 
         }
 

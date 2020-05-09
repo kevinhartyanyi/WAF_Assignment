@@ -1,0 +1,38 @@
+﻿<Window x:Class="Client.View.RegisterWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Client.View"
+        mc:Ignorable="d"
+        Title="RegisterWindow" Height="200" Width="200">
+    <Grid Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Label Grid.Row="0" Grid.Column="0" Content="Full Name:" />
+        <TextBox Grid.Row="0" Grid.Column="1" Margin="5" Name="txtName"
+                 Text="{Binding FullName, UpdateSourceTrigger=PropertyChanged}" />
+        
+        <Label Grid.Row="1" Grid.Column="0" Content="UserName:" />
+        <TextBox Grid.Row="1" Grid.Column="1" Margin="5" Name="txtName2"
+                 Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}" />
+
+        <Label Grid.Row="2" Grid.Column="0" Content="Password:" />
+        <PasswordBox Grid.Row="2" Grid.Column="1" Name="txtPassword" Margin="5" />
+
+        <Button Grid.Row="3" Grid.ColumnSpan="2" Content="Register"
+                HorizontalAlignment="Center" VerticalAlignment="Center"
+                Padding="2"  Margin="5"
+                IsDefault="True"
+                Command="{Binding LoginCommand}"
+                CommandParameter="{Binding ElementName=txtPassword}"/>
+    </Grid>
+</Window>

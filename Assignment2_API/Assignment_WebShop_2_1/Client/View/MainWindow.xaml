@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:Client"
         xmlns:viewModel="clr-namespace:Client.ViewModel"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="WebShop Client" Height="450" Width="800">
 
     <Window.Resources>
         <viewModel:SelectedCategoryConverter x:Key="SelectedCategoryConverter" />
@@ -17,6 +17,7 @@
             <MenuItem Header="_Database">
                 <MenuItem Header="_Refresh lists" Command="{Binding RefreshListsCommand}" />
                 <MenuItem Header="Orders" Command="{Binding OrdersCommand}" />
+                <MenuItem Header="Register" Command="{Binding RegisterCommand}" />
                 <MenuItem Header="_Logout" Command="{Binding LogoutCommand}" />
             </MenuItem>
         </Menu>
@@ -28,7 +29,7 @@
             </Grid.RowDefinitions>
             <GroupBox Grid.Row="0">
                 <GroupBox.Header>
-                    <Label Content="Lists:" />
+                    <Label Content="Categories:" />
                 </GroupBox.Header>
                 <DataGrid ItemsSource="{Binding Categories}"
                           SelectedItem="{Binding SelectedCategory, Converter={StaticResource SelectedCategoryConverter}}"
@@ -68,7 +69,7 @@
             </GroupBox>
             <GroupBox Grid.Row="1">
                 <GroupBox.Header>
-                    <Label Content="Items:" />
+                    <Label Content="Products:" />
                 </GroupBox.Header>
                 <DataGrid ItemsSource="{Binding Products}"
                           SelectedItem="{Binding SelectedProduct}"

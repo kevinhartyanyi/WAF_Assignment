@@ -15,7 +15,6 @@
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="_Database">
-                <MenuItem Header="_Refresh lists" Command="{Binding RefreshListsCommand}" />
                 <MenuItem Header="Close Orders" Command="{Binding CloseOrdersCommand}" />
             </MenuItem>
         </Menu>
@@ -36,7 +35,7 @@
             </StackPanel>
             <GroupBox Grid.Row="1" Grid.RowSpan="1">
                 <GroupBox.Header>
-                    <Label Content="Lists:" />
+                    <Label Content="Orders:" />
                 </GroupBox.Header>
                 <DataGrid ItemsSource="{Binding Categories}"
                           SelectedItem="{Binding SelectedCategory, Converter={StaticResource SelectedOrderConverter}}"
@@ -79,7 +78,7 @@
             </GroupBox>
             <GroupBox Grid.Row="2" Margin="0,48,0,0" Grid.RowSpan="2">
                 <GroupBox.Header>
-                    <Label Content="Items:" />
+                    <Label Content="Products:" />
                 </GroupBox.Header>
                 <DataGrid ItemsSource="{Binding Products}"
                           SelectedItem="{Binding SelectedProduct}"

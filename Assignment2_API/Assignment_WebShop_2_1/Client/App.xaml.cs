@@ -23,6 +23,8 @@ namespace Client
         private MainWindow _mainView;
         private OrderWindow _orderView;
         private LoginWindow _loginView;
+        private RegisterWindow _registerView;
+        private RegisterViewModel _registerViewModel;
 
         public App()
         {
@@ -44,6 +46,16 @@ namespace Client
                 DataContext = _loginViewModel
             };
 
+
+            _registerViewModel = new RegisterViewModel(_service);
+            _registerViewModel.RegisterSuccess += ViewModel_RegisterSucceeded;
+
+            _registerView = new RegisterWindow
+            {
+                DataContext = _registerViewModel
+            };
+
+
             _orderViewModel = new OrderViewModel(_service);
             _orderViewModel.CloseOrders += ViewModel_CloseOrders;
 
@@ -56,6 +68,7 @@ namespace Client
             _mainViewModel.LogoutSucceeded += ViewModel_LogoutSucceeded;
             _mainViewModel.MessageApplication += ViewModel_MessageApplication;
             _mainViewModel.OpenOrders += ViewModel_OpenOrders;
+            _mainViewModel.OpenRegister += ViewModel_OpenRegister;
 
             _mainView = new MainWindow
             {
@@ -63,6 +76,19 @@ namespace Client
             };
             //_mainView.Show();
             _loginView.Show();
+            //_registerView.Show();
+        }
+
+        private void ViewModel_OpenRegister(object sender, EventArgs e)
+        {
+            _mainView.Hide();
+            _registerView.Show();
+        }
+
+        private void ViewModel_RegisterSucceeded(object sender, EventArgs e)
+        {
+            _registerView.Hide();
+            _mainView.Show();
         }
 
         private void ViewModel_LoginSucceeded(object sender, EventArgs e)

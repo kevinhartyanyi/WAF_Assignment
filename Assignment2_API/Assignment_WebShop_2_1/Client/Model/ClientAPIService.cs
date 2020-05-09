@@ -57,6 +57,30 @@ namespace Client.Model
             throw new NetworkException("Service returned response: " + response.StatusCode);
         }
 
+        public async Task<bool> RegisterAsync(string fullName, string userName, string password)
+        {
+            RegisterDTO user = new RegisterDTO
+            {
+                FullName = fullName,
+                UserName = userName,
+                Password = password
+            };
+
+            HttpResponseMessage response = await _client.PostAsJsonAsync("api/Account/Register", user);
+
+            if (response.IsSuccessStatusCode)
+            {
+                return true;
+            }
+
+            if (response.StatusCode == HttpStatusCode.Unauthorized)
+            {
+                return false;
+            }
+
+            throw new NetworkException("Service returned response: " + response.StatusCode);
+        }
+
         #endregion
 
 

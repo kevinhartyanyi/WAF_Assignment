@@ -88,10 +88,13 @@ namespace Client.ViewModel
         public DelegateCommand IncrementProductCommand { get; private set; }
         public DelegateCommand DisableCommand { get; private set; }
         public DelegateCommand EnableCommand { get; private set; }
+        public DelegateCommand RegisterCommand { get; private set; }
 
         public event EventHandler LogoutSucceeded;
 
         public event EventHandler OpenOrders;
+
+        public event EventHandler OpenRegister;
 
         public MainViewModel(ClientAPIService service)
         {
@@ -109,6 +112,10 @@ namespace Client.ViewModel
             EnableCommand = new DelegateCommand(_ => !(SelectedProduct is null) && !SelectedProduct.Available, _ => EnableProduct(SelectedProduct));
 
             OrdersCommand = new DelegateCommand(_ => OpenOrders?.Invoke(this, EventArgs.Empty));
+
+            RegisterCommand = new DelegateCommand(_ => OpenRegister?.Invoke(this, EventArgs.Empty));
+
+            LoadListsAsync();
         }
 
         #region Authentication

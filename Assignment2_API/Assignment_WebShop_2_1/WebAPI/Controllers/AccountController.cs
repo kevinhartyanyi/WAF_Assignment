@@ -16,12 +16,13 @@ namespace WebAPI.Controllers
     [ApiController]
     public class AccountController : ControllerBase
     {
+        private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
 
-        public AccountController(SignInManager<ApplicationUser> signInManager)
+        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
         {
             _signInManager = signInManager;
-            
+            _userManager = userManager;
         }
 
         // api/Account/Login
@@ -51,7 +52,26 @@ namespace WebAPI.Controllers
 
             return Ok();
         }
+        
 
+        [HttpPost]
+        public async Task<IActionResult> Register([FromBody] RegisterDTO model)
+        {
+            
+            var user = new ApplicationUser {                     
+                FullName = model.FullName,
+                UserName = model.UserName
+            };
+            var result = await _userManager.CreateAsync(user, model.Password);
+
+            if (!result.Succeeded)
+            {
+                return Unauthorized("Register failed!");
+            }
+            
+
+            return Ok();
+        }
 
     }
 }
