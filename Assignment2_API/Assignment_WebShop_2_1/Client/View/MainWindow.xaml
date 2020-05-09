@@ -15,9 +15,9 @@
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="_Database">
-                <MenuItem Header="_Refresh lists" Command="{Binding RefreshListsCommand}" />
-                <MenuItem Header="Orders" Command="{Binding OrdersCommand}" />
-                <MenuItem Header="Register" Command="{Binding RegisterCommand}" />
+                <MenuItem Header="_Refresh Categories" Command="{Binding RefreshListsCommand}" />
+                <MenuItem Header="Open Orders" Command="{Binding OrdersCommand}" />
+                <MenuItem Header="New Register" Command="{Binding RegisterCommand}" />
                 <MenuItem Header="_Logout" Command="{Binding LogoutCommand}" />
             </MenuItem>
         </Menu>

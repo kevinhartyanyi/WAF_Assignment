@@ -44,10 +44,10 @@ namespace Client.ViewModel
             }
         }
 
-        public List<OrdViewModel> CategoryForCombo
-        {
-            get => Categories.ToList();
-        }
+        //public List<OrdViewModel> CategoryForCombo
+        //{
+        //    get => Categories.ToList();
+        //}
 
         public ObservableCollection<ProductViewModel> Products
         {
@@ -105,6 +105,8 @@ namespace Client.ViewModel
         {
             _service = service;
 
+            MySearch("", 0);
+
             SelectCategoryCommand = new DelegateCommand(_ => LoadItemsAsync(SelectedCategory));
 
             SearchName = new DelegateCommand(_ => MySearch(SearchText, 0));
@@ -132,7 +134,7 @@ namespace Client.ViewModel
 
             AskDeliver = Visibility.Hidden;
 
-            MySearch("", 0);
+            
 
         }
 

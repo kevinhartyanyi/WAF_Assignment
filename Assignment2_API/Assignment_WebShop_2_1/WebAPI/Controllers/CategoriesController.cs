@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Data.Models;
 using Data.Services;
 using Data;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebAPI.Controllers
 {

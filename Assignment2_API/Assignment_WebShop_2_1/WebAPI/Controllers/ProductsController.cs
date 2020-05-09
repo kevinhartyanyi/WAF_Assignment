@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Data.Models;
 using Data.Services;
 using Data;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebAPI.Controllers
 {
@@ -23,6 +24,7 @@ namespace WebAPI.Controllers
             _service = service;
         }
 
+        [Authorize]
         [HttpGet]
         public IActionResult GetProducts()
         {
@@ -48,6 +50,7 @@ namespace WebAPI.Controllers
             }
         }
 
+        [Authorize]
         [HttpGet("{id}")]
         public IActionResult GetProduct(int id)
         {
@@ -80,6 +83,7 @@ namespace WebAPI.Controllers
             }
         }
 
+        [Authorize]
         [HttpGet("category/{id}")]
         public IActionResult GetProductForCategory(int id)
         {
@@ -109,7 +113,7 @@ namespace WebAPI.Controllers
         }
 
 
-        //[Authorize] TODO
+        [Authorize]
         [HttpPut("{id}")]
         public IActionResult PutProduct(Int32 id, ProductDTO pro)
         {

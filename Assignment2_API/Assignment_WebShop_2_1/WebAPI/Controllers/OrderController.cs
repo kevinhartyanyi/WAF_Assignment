@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Data;
 using Data.Models;
 using Data.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,6 +21,7 @@ namespace WebAPI.Controllers
             _service = service;
         }
 
+        [Authorize]
         [HttpGet]
         public IActionResult GetOrders()
         {
@@ -61,6 +63,7 @@ namespace WebAPI.Controllers
             }
         }
 
+        [Authorize]
         [HttpGet("{id}")]
         public IActionResult GetOrder(int id)
         {
@@ -107,7 +110,7 @@ namespace WebAPI.Controllers
             }
         }
 
-        //[Authorize] TODO
+        [Authorize]// TODO
         [HttpPut("{id}")]
         public IActionResult PutOrder(Int32 id, OrderDTO o)
         {

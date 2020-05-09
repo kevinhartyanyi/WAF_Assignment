@@ -111,7 +111,7 @@ namespace Client.ViewModel
 
             EnableCommand = new DelegateCommand(_ => !(SelectedProduct is null) && !SelectedProduct.Available, _ => EnableProduct(SelectedProduct));
 
-            OrdersCommand = new DelegateCommand(_ => OpenOrders?.Invoke(this, EventArgs.Empty));
+            OrdersCommand = new DelegateCommand(_ => OpenOrderWindow());
 
             RegisterCommand = new DelegateCommand(_ => OpenRegister?.Invoke(this, EventArgs.Empty));
 
@@ -139,6 +139,12 @@ namespace Client.ViewModel
         }
 
         #endregion
+
+        private void OpenOrderWindow()
+        {
+            LoadListsAsync();
+            OpenOrders?.Invoke(this, EventArgs.Empty);
+        }
 
         private async void LoadListsAsync()
         {
