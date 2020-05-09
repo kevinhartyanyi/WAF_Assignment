@@ -4,14 +4,16 @@ using Data.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Assignment_WebShop_2.Migrations
 {
     [DbContext(typeof(WebShopContext))]
-    partial class WebShopContextModelSnapshot : ModelSnapshot
+    [Migration("20200509093438_appuser_new")]
+    partial class appuser_new
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
