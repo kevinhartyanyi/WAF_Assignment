@@ -1,0 +1,230 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam defaultFontName Serif
+skinparam defaultFontSize 20
+skinparam defaultFontColor #3a3934
+skinparam classAttributeIconSize 0
+skinparam class {
+    BackgroundColor #eefbd8
+    BorderColor DarkSlateGray
+}
+left to right direction
+
+package ViewModel {
+    class ViewModelBase{
+        + PropertyChanged: PropertyChangedEventHandler
+        + MessageApplication: EventHandler<MessageEventArgs>
+
+        # OnPropertyChanged([CallerMemberName] string): void
+        # OnMessageApplication(string): void
+
+    }
+    class RegisterViewModel {
+        - _model: ClientAPIService
+        - _isLoading: bool
+
+        + LoginCommand: DelegateCommand
+        + UserName: string
+        + FullName: string
+        + IsLoading: bool
+        + RegisterSuccess: EventHandler
+
+        + RegisterStart(PasswordBox): void
+    }
+
+    class LoginViewModel {
+        - _model: ClientAPIService
+        - _isLoading: bool
+
+        + LoginCommand: DelegateCommand
+        + LogintSucceeded: DelegateCommand
+        + LoginFailed: DelegateCommand
+        + UserName: string
+        + IsLoading: bool
+        + RegisterSuccess: EventHandler
+
+        + LoginAsync(PasswordBox): void
+        + OnLoginSuccess(): void
+        + OnLoginFailed(): void
+    }
+
+    class CategoryViewModel {
+        - _id: int
+        - _name: string
+        - _isDirty: bool
+        - _backup: CategoryViewModel
+
+        + Id: int
+        + Name: string
+        + EditEnded: EventHandler
+
+        + BeginEdit(): void
+        + CancelEdit(): void
+        + EndEdit(): void
+    }
+
+    class ProductViewModel {
+        - _id: int
+        - _manufacturer: string
+        - _description: string
+        - _modelID: int
+        - _price: int
+        - _amount: int
+        - _available: bool
+        - _image: byte[]
+        - _category: CategoryDTO
+        - _backup: ProductViewModel
+
+        + Id: int
+        + ModelID: int
+        + Price: int
+        + Amount: int
+        + Available: bool
+        + Category: CategoryDTO
+        + IsDirty: bool
+        + Error: string
+        + Description: string
+        + Manufacturer: string
+        + Image: byte[]
+
+        + BeginEdit(): void
+        + CancelEdit(): void
+        + EndEdit(): void
+    }
+
+    class OrdViewModel {
+        - _id: int
+        - _name: string
+        - _email: string
+        - _address: string
+        - _phone: string
+        - _delivered: bool
+        - _orderedProducts: List<BasketElemDTO>
+
+        + Id: int
+        + Name: string
+        + Email: string
+        + Address: string
+        + Phone: string
+        + Delivered: bool
+        + OrderedProducts: List<BasketElemDTO>
+        + EditEnded: EventHandler
+
+        + BeginEdit(): void
+        + CancelEdit(): void
+        + EndEdit(): void
+    }
+
+    class OrderViewModel {
+        - _service: ClientAPIService
+        - _categories: ObservableCollection<OrdViewModel>
+        - _products: ObservableCollection<ProductViewModel>
+        - _selectedCategory: OrdViewModel
+        - _selectedProduct: ProductViewModel
+
+        + Categories: ObservableCollection<OrdViewModel>
+        + Products: ObservableCollection<ProductViewModel>
+        + SelectedCategory: OrdViewModel
+        + SelectedProduct: ProductViewModel
+        + AskDeliver: Visibility
+        + RefreshListsCommand: DelegateCommand
+        + SelectCategoryCommand: DelegateCommand
+        + SearchName: DelegateCommand
+        + SearchAddress: DelegateCommand
+        + SearchDelivered: DelegateCommand
+        + CloseOrdersCommand: DelegateCommand
+        + Deliver: DelegateCommand
+        + StartDeliver: DelegateCommand
+        + StopDeliver: DelegateCommand
+        + CloseOrders: EventHandler
+
+        + CompleteDelivery(OrdViewModel): void
+        + MySearch(string, int): void
+        + LoadItemsAsync(OrdViewModel): void
+    }
+
+    class MainViewModel {
+        - _service: ClientAPIService
+        - _categories: ObservableCollection<CategoryViewModel>
+        - _products: ObservableCollection<ProductViewModel>
+        - _selectedCategory: CategoryViewModel
+        - _selectedProduct: ProductViewModel
+
+        + Categories: ObservableCollection<CategoryViewModel>
+        + Products: ObservableCollection<ProductViewModel>
+        + SelectedCategory: CategoryViewModel
+        + SelectedProduct: ProductViewModel
+        + RefreshListsCommand: DelegateCommand
+        + SelectCategoryCommand: DelegateCommand
+        + LogoutCommand: DelegateCommand
+        + OrdersCommand: DelegateCommand
+        + IncrementProductCommand: DelegateCommand
+        + DisableCommand: DelegateCommand
+        + EnableCommand: DelegateCommand
+        + RegisterCommand: DelegateCommand
+        + LogoutSucceeded: EventHandler
+        + OpenOrders: EventHandler
+        + OpenRegister: EventHandler
+
+        + LogoutAsync(): void
+        + OnLogoutSuccess(): void
+        + OpenOrderWindow(): void
+        + LoadListsAsync(): void
+        + LoadItemsAsync(CategoryViewModel): void
+        + IncrementProduct(ProductViewModel): void
+        + DisableProduct(ProductViewModel): void
+        + EnableProduct(ProductViewModel): void
+    }
+
+    ViewModelBase <|-- RegisterViewModel
+    ViewModelBase <|-- LoginViewModel
+    ViewModelBase <|-- CategoryViewModel
+    ViewModelBase <|-- ProductViewModel
+    ViewModelBase <|-- OrdViewModel
+    ViewModelBase <|-- OrderViewModel
+    ViewModelBase <|-- MainViewModel
+    OrdViewModel <-- OrderViewModel
+    ProductViewModel <-- OrderViewModel
+    CategoryViewModel <-- MainViewModel
+    ProductViewModel <-- MainViewModel
+
+    View <-- LoginViewModel
+    View <-- RegisterViewModel
+    View <-- MainViewModel
+    View <-- OrderViewModel
+}
+
+package View {
+    class LoginWindow {
+    }
+    class MainWindow {
+    }
+    class OrderWindow {
+    }
+    class RegisterWindow {
+    }
+}
+
+package Model {
+    class ClientAPIService {
+        - _client: HttpClient
+
+        + LoginAsync(string, string): Task<bool>
+        + LogoutAsync(): Task
+        + RegisterAsync(string, string, string): Task<bool>
+        + LoadListsAsync(): Task<IEnumerable<CategoryDTO>>
+        + LoadOrdersAsync(): Task<IEnumerable<OrderDTO>>
+        + LoadItemsAsync(int): Task<IEnumerable<ProductDTO>>
+        + LoadProductAsync(int): Task<ProductDTO>
+        + LoadOrderProductAsync(int): Task<OrderDTO>
+        + UpdateOrderAsync(OrderDTO): Task
+        + UpdateProductAsync(ProductDTO): Task
+    }
+    class NetworkException {
+        
+    }
+}
+
+Model <|--ViewModel
+
+@enduml

@@ -1,0 +1,85 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam defaultFontName Serif
+skinparam defaultFontSize 20
+skinparam defaultFontColor #3a3934
+skinparam classAttributeIconSize 0
+skinparam class {
+    BackgroundColor #eefbd8
+    BorderColor DarkSlateGray
+}
+
+left to right direction
+
+class ControllerBase{
+
+}
+
+class AccountController {
+    - _userManager: UserManager<ApplicationUser>
+    - _signInManager: SignInManager<ApplicationUser>
+
+    + Login([FromBody] LoginDTO): Task<IActionResult>
+    + Logout(): Task<IActionResult>
+    + Register([FromBody] RegisterDTO): Task<IActionResult>
+}
+
+class CategoriesController {
+    # _service: WebShopServices
+
+    + GetCategories(): IActionResult
+}
+
+class ProductsController {
+    # _service: WebShopServices
+
+
+    + GetProducts(): IActionResult
+    + GetProduct(int): IActionResult
+    + GetProductForCategory(int): IActionResult
+    + PutProduct(int, ProductDTO): IActionResult
+}
+
+class OrderController {
+    # _service: WebShopServices
+
+    + GetOrders(): IActionResult
+    + GetOrder(int): IActionResult
+    + PutOrder(int, OrderDTO): IActionResult
+}
+
+package "Data" #DDDDDD {
+    class OrderDTO {
+    }
+    class ProductDTO {
+
+    }
+    class CategoryDTO {
+
+    }
+    class RegisterDTO {
+
+    }
+    class LoginDTO {
+    }
+    class BasketElemDTO {
+    }
+    class ApplicationUser {
+    }
+    class IdentityUser {
+    }
+    IdentityUser <|-- ApplicationUser
+}
+
+ControllerBase <|-- AccountController
+ControllerBase <|-- CategoriesController
+ControllerBase <|-- ProductsController
+ControllerBase <|-- OrderController
+
+Data <-- AccountController
+Data <-- CategoriesController
+Data <-- ProductsController
+Data <-- OrderController
+
+
+@enduml

@@ -110,7 +110,7 @@ namespace WebAPI.Controllers
             }
         }
 
-        [Authorize]// TODO
+        [Authorize]
         [HttpPut("{id}")]
         public IActionResult PutOrder(Int32 id, OrderDTO o)
         {
