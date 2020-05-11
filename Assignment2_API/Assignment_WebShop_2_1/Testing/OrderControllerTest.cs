@@ -120,7 +120,7 @@ namespace Testing
             var result = _controller.PutOrder(id, newOrder);
 
             // Assert
-            var objectResult = Assert.IsAssignableFrom<OkObjectResult>(result);
+            var objectResult = Assert.IsAssignableFrom<OkResult>(result);
             var newCurrentProduct = _service.GetOrderByID(id);
             Assert.True(currentOrder.Delivered);
         }

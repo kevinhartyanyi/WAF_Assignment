@@ -119,35 +119,33 @@ namespace WebAPI.Controllers
                 return BadRequest();
             }
 
-            Order ord = new Order
+            Order change = _service.GetOrderByID(o.ID);
+            for (int i = 0; i < o.OrderedProducts.Count(); i++)
             {
-                OrderedProducts = new List<BasketElem>(o.OrderedProducts.Select(x => new BasketElem
-                {
-                    ID = x.Id,
-                    amount = x.amount,
-                    product = new Product
-                    {
-                        ID = x.product.Id,
-                        Amount = x.product.Amount,
-                        Available = x.product.Available,
-                        Category = new Category { ID = x.product.Category.Id, Name = x.product.Category.Name },
-                        Description = x.product.Description,
-                        Image = x.product.Image,
-                        Manufacturer = x.product.Manufacturer,
-                        ModelID = x.product.ModelID,
-                        Price = x.product.Price,
-                        CategoryId = x.product.Category.Id
-                    }
-                })),
-                Address = o.Address,
-                Delivered = o.Delivered,
-                Email = o.Email,
-                ID = o.ID,
-                PhoneNumber = o.PhoneNumber,
-                UserName = o.UserName
-            };
+                var x = o.OrderedProducts[i];
+                change.OrderedProducts[i].amount = x.amount;
+                //change.OrderedProducts.Single(x => x.ID == x.ID).product.ID = x.product.Id;
+                change.OrderedProducts[i].product.Amount = x.product.Amount;
+                change.OrderedProducts[i].product.Available = x.product.Available;
+                //change.OrderedProducts.Single(x => x.ID == x.ID).Category = new Category { ID = x.product.Category.Id, Name = x.product.Category.Name },
+                change.OrderedProducts[i].product.Description = x.product.Description;
+                change.OrderedProducts[i].product.Image = x.product.Image;
+                change.OrderedProducts[i].product.Manufacturer = x.product.Manufacturer;
+                change.OrderedProducts[i].product.ModelID = x.product.ModelID;
+                change.OrderedProducts[i].product.Price = x.product.Price;
+                change.OrderedProducts[i].product.CategoryId = x.product.Category.Id;
+            } 
 
-            if (_service.UpdateOrder(ord))
+            change.Address = o.Address;
+            change.Delivered = o.Delivered;
+            change.Email = o.Email;
+            change.PhoneNumber = o.PhoneNumber;
+            change.UserName = o.UserName;
+
+
+
+
+            if (_service.UpdateOrder(change))
             {
                 return Ok();
             }

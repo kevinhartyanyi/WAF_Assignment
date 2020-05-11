@@ -122,7 +122,11 @@ namespace WebAPI.Controllers
                 return BadRequest();
             }
 
-            if (_service.UpdateProduct((Product)pro))
+            Product change = _service.GetProduct(pro.Id);
+            change.Amount = pro.Amount;
+            change.Available = pro.Available;
+
+            if (_service.UpdateProduct(change))
             {
                 return Ok();
             }

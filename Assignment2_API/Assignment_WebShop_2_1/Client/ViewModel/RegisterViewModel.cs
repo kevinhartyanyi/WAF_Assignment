@@ -66,8 +66,14 @@ namespace Client.ViewModel
                 IsLoading = true;
                 bool result = await _model.RegisterAsync(FullName, UserName, passwordBox.Password);
                 IsLoading = false;
-
-                RegisterSuccess?.Invoke(this, EventArgs.Empty);
+                if(result)
+                {
+                    RegisterSuccess?.Invoke(this, EventArgs.Empty);
+                }
+                else
+                {
+                    OnMessageApplication($"Név foglalt");
+                }
             }
             catch (NetworkException ex)
             {

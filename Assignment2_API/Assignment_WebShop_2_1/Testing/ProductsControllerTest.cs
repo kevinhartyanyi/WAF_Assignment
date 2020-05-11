@@ -101,6 +101,7 @@ namespace Testing
         {
             // Arrange
             var currentProduct = _service.GetProduct(id);
+
             Assert.Equal(3, currentProduct.Amount);
 
             var newProduct = new ProductDTO {
@@ -117,11 +118,10 @@ namespace Testing
             newProduct.Amount = 5;
 
             // Act
-            //_service.UpdateProduct(currentProduct);
-            var result = _controller.PutProduct(id, newProduct);           
-            
+            var result = _controller.PutProduct(id, newProduct);
+
             // Assert
-            var objectResult = Assert.IsAssignableFrom<OkObjectResult>(result);
+            var objectResult = Assert.IsAssignableFrom<OkResult>(result);
             var newCurrentProduct = _service.GetProduct(id);
             Assert.Equal(5, newCurrentProduct.Amount);
         }
